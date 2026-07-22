@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>document.documentElement.classList.add('js');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>History Inquiry Lab — Free Printable History Worksheets &amp; Inquiry Activities</title>
+  <meta name="description" content="Free printable history worksheets, inquiry activities, and classroom resources that help students build historical thinking and investigate the past like real historians." />
+
+  <!-- Favicon = HIL logo -->
+  <link rel="icon" type="image/png" href="./assets/logo.png" />
+  <link rel="apple-touch-icon" href="./assets/logo.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="History Inquiry Lab — Free History Worksheets &amp; Inquiry Activities" />
+  <meta property="og:description" content="Free printable history worksheets, inquiry activities, and classroom resources that help students build historical thinking." />
+  <meta property="og:image" content="./assets/hero.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #17324e;
+      --navy-deep: #0f2438;
+      --gold: #e6b84d;
+      --gold-dark: #c9a13a;
+      --cream: #f6f1e6;
+      --cream-page: #f2ede2;
+      --ink: #22303c;
+      --ink-soft: #4a5a67;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--cream-page);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      background-image: url('./assets/hero.jpg');
+      background-size: cover;
+      background-position: center 35%;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(15,36,56,.72) 0%, rgba(15,36,56,.5) 42%, rgba(23,50,78,.9) 85%, #17324e 100%);
+    }
+    .hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 72px 22px;
+    }
+    .hero__content { max-width: 680px; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+    /* Logo sits on a light circular plate so the navy HIL mark stays crisp on the dark hero */
+    .brand__badge {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: #fbf8f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+    .brand__badge img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+    .brand__name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: .3px;
+      line-height: 1.15;
+    }
+    .brand__tag {
+      font-size: .8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      font-size: clamp(3.6rem, 12vw, 7rem);
+      line-height: 0.98;
+      letter-spacing: -1px;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 18px rgba(0,0,0,.35);
+    }
+    .hero h1 .h1-line { display: block; }
+    .hero__subtitle {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero__desc {
+      font-size: clamp(1rem, 2.1vw, 1.18rem);
+      color: rgba(255,255,255,.92);
+      max-width: 560px;
+      margin-bottom: 36px;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1.02rem;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 999px;
+      transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .btn svg { width: 20px; height: 20px; flex: 0 0 auto; }
+
+    .btn--gold {
+      background: var(--gold);
+      color: var(--navy-deep);
+      box-shadow: 0 8px 24px rgba(230,184,77,.35);
+    }
+    .btn--gold:hover {
+      background: #f0c765;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(230,184,77,.5);
+    }
+
+    .btn--outline-light {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,.55);
+    }
+    .btn--outline-light:hover {
+      background: rgba(255,255,255,.12);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn--navy {
+      background: var(--navy);
+      color: #fff;
+    }
+    .btn--navy:hover {
+      background: var(--navy-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(23,50,78,.35);
+    }
+
+    /* ---------- Section headings ---------- */
+    .section { padding: 78px 0; }
+    .section-head {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 48px;
+    }
+    .section-head .eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 12px;
+    }
+    .section-head h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-head p {
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+    }
+
+    /* ---------- Resource cards ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .card {
+      background: var(--cream);
+      border: 1px solid rgba(23,50,78,.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 20px rgba(23,50,78,.06);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(23,50,78,.14);
+    }
+    .card__thumb {
+      position: relative;
+      background: #e9e2d2;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(23,50,78,.08);
+    }
+    .card__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform .35s ease;
+    }
+    .card:hover .card__thumb img { transform: scale(1.04); }
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--navy);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+    .card__body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card__body h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.28rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .card__body p {
+      color: var(--ink-soft);
+      font-size: .95rem;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+    }
+    .card__actions .btn { padding: 12px 22px; font-size: .95rem; }
+    .link-alt {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 1px;
+      transition: color .18s ease, border-color .18s ease;
+    }
+    .link-alt:hover { color: var(--gold-dark); border-color: var(--gold-dark); }
+
+    /* ---------- Reveal animation (only when JS is on) ---------- */
+    /* The whole resources section stays hidden until the hero button is clicked */
+    .js #resources { display: none; }
+    .js #resources.is-open { display: block; }
+
+    .js .reveal { opacity: 0; transform: translateY(34px) scale(.97); }
+    .js .reveal.reveal-in {
+      opacity: 1;
+      transform: none;
+      transition: opacity .55s cubic-bezier(.2,.7,.3,1), transform .55s cubic-bezier(.2,.7,.3,1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ---------- Social section ---------- */
+    .social {
+      background: var(--navy);
+      color: #fff;
+      text-align: center;
+    }
+    .social h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 12px;
+    }
+    .social p {
+      color: rgba(255,255,255,.82);
+      max-width: 520px;
+      margin: 0 auto 34px;
+      font-size: 1.05rem;
+    }
+    .social__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .social__btns {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .social .btn--gold:hover { color: var(--navy-deep); }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--navy-deep);
+      color: rgba(255,255,255,.7);
+      padding: 34px 0;
+      text-align: center;
+      font-size: .9rem;
+    }
+    footer .foot-brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+    footer .foot-tags {
+      color: var(--gold);
+      font-size: .8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ---------- Tablet ---------- */
+    @media (max-width: 768px) {
+      .section { padding: 62px 0; }
+      .grid { gap: 22px; }
+      .hero__inner { padding: 60px 20px; }
+    }
+
+    /* ---------- Phone ---------- */
+    @media (max-width: 600px) {
+      .hero { min-height: 100vh; min-height: 100svh; }
+      .hero__inner { padding: 48px 20px; }
+
+      .brand { gap: 13px; margin-bottom: 26px; }
+      .brand__badge { width: 58px; height: 58px; padding: 7px; }
+      .brand__name { font-size: 1.1rem; }
+      .brand__tag { font-size: .72rem; letter-spacing: 1.6px; }
+
+      /* Headline sized to never overflow narrow screens */
+      .hero h1 {
+        font-size: clamp(3rem, 15vw, 3.9rem);
+        letter-spacing: -.5px;
+        margin-bottom: 16px;
+      }
+      .hero__subtitle { margin-bottom: 16px; }
+      .hero__desc { margin-bottom: 30px; font-size: 1.02rem; }
+
+      .section { padding: 54px 0; }
+      .section-head { margin-bottom: 34px; }
+
+      /* One comfortable column of cards */
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+
+      /* Full-width, easy-to-tap buttons */
+      .btn { width: 100%; justify-content: center; padding: 15px 24px; }
+      .hero .btn { width: 100%; }
+      .card__actions { flex-direction: column; align-items: stretch; }
+      .card__actions .btn { width: 100%; }
+      .social__btns { flex-direction: column; }
+    }
+
+    /* ---------- Small phone ---------- */
+    @media (max-width: 360px) {
+      .hero h1 { font-size: 2.7rem; }
+      .hero__inner { padding: 40px 16px; }
+      .wrap { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero__inner">
+      <div class="hero__content">
+
+        <div class="brand">
+          <span class="brand__badge">
+            <img src="./assets/logo.png" alt="History Inquiry Lab logo — the letters HIL inside a circle" />
+          </span>
+        </div>
+
+        <h1><span class="h1-line">History</span><span class="h1-line">Inquiry Lab</span></h1>
+        <p class="hero__subtitle">Helping students investigate the past—not just memorize it.</p>
+        <p class="hero__desc">Explore printable history worksheets, inquiry activities, and classroom resources designed to build historical thinking.</p>
+
+        <a href="#resources" class="btn btn--gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download Free Worksheet
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FREE RESOURCES ============ -->
+  <main>
+    <section class="section" id="resources">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Free Resources</span>
+          <h2>Free History Worksheets &amp; Inquiry Activities</h2>
+          <p>Ready-to-print activities that turn students into investigators. Click download to save a full-size worksheet for your classroom.</p>
+        </div>
+
+        <div class="grid">
+
+          <!-- Card 1 -->
+          <article class="card reveal">
+            <div class="card__thumb">
+              <img src="./assets/thumbs/one-place-four-ages.jpg" alt="Preview of the One Place, Four Ages worksheet showing a hill through the Stone Age, Bronze Age, Roman period and Middle Ages" loading="lazy" />
+            </div>
+            <div class="card__body">
+              <h3>One Place, Four Ages</h3>
+              <p>How can a single place tell thousands of years of history? Students compare evidence across four eras and build a claim.</p>
+              <div class="card__actions">
+                <a class="btn btn--navy" href="./downloads/one-place-four-ages.png" download="one-place-four-ages.png">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+                  Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="card reveal">
+            <div class="card__thumb">
+              <img src="./assets/thumbs/greek-hoplite-helmet.jpg" alt="Preview of the Greek Hoplite Helmet worksheet for investigating an artifact as historical evidence" loading="lazy" />
+            </div>
+            <div class="card__body">
+              <h3>Greek Hoplite Helmet</h3>
+              <p>Investigate a single artifact as historical evidence—where it was found, what it's made of, and what it reveals about the past.</p>
+              <div class="card__actions">
+                <a class="btn btn--navy" href="./downloads/greek-hoplite-helmet.png" download="greek-hoplite-helmet.png">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+                  Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="card reveal">
+            <div class="card__thumb">
+              <img src="./assets/thumbs/ancient-greek-amphora-color.jpg" alt="Preview of the Ancient Greek Amphora worksheet with five questions from different experts" loading="lazy" />
+            </div>
+            <div class="card__body">
+              <h3>Ancient Greek Amphora</h3>
+              <p>One object, five experts. Students step into the roles of archaeologist, historian, chemist, conservator and curator.</p>
+              <div class="card__actions">
+                <a class="btn btn--navy" href="./downloads/ancient-greek-amphora-color.png" download="ancient-greek-amphora-color.png">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+                  Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="card reveal">
+            <div class="card__thumb">
+              <img src="./assets/thumbs/find-the-evidence-color.jpg" alt="Preview of the Find the Evidence That Doesn't Belong worksheet about a Neolithic farming village" loading="lazy" />
+            </div>
+            <div class="card__body">
+              <h3>Find the Evidence That Doesn't Belong</h3>
+              <p>Why do archaeologists think this was a farming village? Students spot the out-of-place clues and reconstruct the real story.</p>
+              <div class="card__actions">
+                <a class="btn btn--navy" href="./downloads/find-the-evidence-color.png" download="find-the-evidence-color.png">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+                  Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOCIAL ============ -->
+    <section class="section social">
+      <div class="wrap">
+        <span class="social__eyebrow">Stay Connected</span>
+        <h2>See Ideas in Action</h2>
+        <p>Follow along for classroom inspiration, student work, and daily history ideas—then bring the inquiry into your own room.</p>
+        <div class="social__btns">
+          <!-- TODO: replace href="#" with the real Threads profile URL -->
+          <a class="btn btn--outline-light" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.2 22h-.05C8.9 21.98 6.4 20.9 4.72 18.79 3.22 16.9 2.45 14.28 2.42 12v-.02C2.45 9.7 3.22 7.08 4.72 5.2 6.4 3.08 8.9 2 12.15 2h.05c2.5.02 4.6.8 6.2 2.32 1.5 1.42 2.43 3.4 2.77 5.9l-1.98.28c-.6-4.3-3.06-5.98-6.28-6H12.13c-2.66 0-4.67.83-5.98 2.47-1.23 1.54-1.86 3.76-1.88 5.9.02 2.14.65 4.37 1.88 5.9 1.3 1.65 3.32 2.48 5.98 2.5h.02c2.4-.02 3.98-.58 5.3-1.9 1.5-1.5 1.47-3.34 1-4.46-.3-.66-.83-1.2-1.56-1.6-.18 1.3-.6 2.35-1.24 3.14-.87 1.06-2.1 1.64-3.66 1.72-1.18.06-2.32-.22-3.2-.8-1.04-.68-1.65-1.72-1.72-2.94-.13-2.4 1.8-4.13 4.8-4.3.86-.05 1.66-.02 2.4.1-.1-.6-.3-1.07-.6-1.4-.4-.45-1.04-.68-1.9-.7h-.06c-.7 0-1.64.2-2.24 1.1l-1.65-1.12c.8-1.2 2.12-1.86 3.9-1.86h.1c2.96.03 4.73 1.85 4.9 5 .1.05.2.1.3.14 1.4.66 2.42 1.66 2.96 2.9.75 1.72.82 4.52-1.44 6.78-1.72 1.72-3.8 2.5-6.72 2.52Zm1.5-9.9c-.16 0-.33 0-.5.02-2.26.13-2.96 1.2-2.9 2.02.06 1.02 1.16 1.5 2.22 1.44.98-.05 2.24-.43 2.46-3.28-.4-.1-.83-.2-1.28-.2Z"/></svg>
+            Follow on Threads
+          </a>
+          <!-- TODO: replace href="#" with the real Instagram profile URL -->
+          <a class="btn btn--gold" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            Follow on Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <p class="foot-brand">History Inquiry Lab</p>
+      <p>Helping students investigate the past—not just memorize it.</p>
+      <p class="foot-tags">Evidence · Inquiry · Historical Thinking · Student Curiosity</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var section   = document.getElementById('resources');
+      var revealEls = Array.prototype.slice.call(section.querySelectorAll('.reveal'));
+
+      // Reveal the section head + each card with a staggered pop-in.
+      function reveal() {
+        revealEls.forEach(function (el, i) {
+          setTimeout(function () { el.classList.add('reveal-in'); }, i * 130);
+        });
+      }
+
+      // The resources section only appears after the hero button is clicked.
+      var trigger = document.querySelector('a.btn--gold[href="#resources"]');
+      if (trigger) {
+        trigger.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          if (!section.classList.contains('is-open')) {
+            section.classList.add('is-open');   // show the section
+            reveal();                           // then animate the cards in
+          }
+          // Wait a frame so the now-visible section has a layout position to scroll to.
+          requestAnimationFrame(function () {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
