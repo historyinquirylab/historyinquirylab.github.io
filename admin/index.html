@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Admin · History Inquiry Lab</title>
+  <title>Админка · History Inquiry Lab</title>
   <link rel="icon" type="image/png" href="../assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,76 +72,76 @@
 <body>
   <div class="wrap">
     <header class="top">
-      <img src="../assets/logo.png" alt="History Inquiry Lab logo" />
+      <img src="../assets/logo.png" alt="Логотип History Inquiry Lab" />
       <div>
-        <h1>Resources Admin</h1>
-        <p>Add and remove free materials — <a href="../" style="color:var(--gold-dark)">view site</a></p>
+        <h1>Управление материалами</h1>
+        <p>Добавляйте и удаляйте бесплатные материалы — <a href="../" style="color:var(--gold-dark)">открыть сайт</a></p>
       </div>
     </header>
 
-    <!-- Connection -->
+    <!-- Подключение -->
     <section class="card">
-      <h2><span class="status-dot" id="dot"></span> Connection</h2>
-      <p class="hint">Enter a GitHub token with write access to this repository. It is stored only in this browser.</p>
+      <h2><span class="status-dot" id="dot"></span> Подключение</h2>
+      <p class="hint">Введите токен GitHub с правом записи в репозиторий. Токен хранится только в этом браузере.</p>
       <div class="row">
         <div>
-          <label>Repository</label>
+          <label>Репозиторий</label>
           <input type="text" id="repo" value="historyinquirylab/historyinquirylab.github.io" />
         </div>
         <div>
-          <label>Branch</label>
+          <label>Ветка</label>
           <input type="text" id="branch" value="main" />
         </div>
       </div>
-      <label>GitHub token <span class="req">*</span></label>
-      <input type="password" id="token" placeholder="github_pat_… or ghp_…" autocomplete="off" />
+      <label>Токен GitHub <span class="req">*</span></label>
+      <input type="password" id="token" placeholder="github_pat_… или ghp_…" autocomplete="off" />
       <div class="actions">
-        <button class="btn" id="saveTok">Save &amp; connect</button>
-        <button class="btn--danger btn btn--sm" id="forgetTok" type="button">Forget token</button>
+        <button class="btn" id="saveTok">Сохранить и подключиться</button>
+        <button class="btn--danger btn btn--sm" id="forgetTok" type="button">Забыть токен</button>
         <span class="muted" id="who"></span>
       </div>
       <details class="help">
-        <summary>How to get a token</summary>
+        <summary>Как получить токен</summary>
         <ol>
-          <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained tokens → Generate new</a>.</li>
+          <li>Откройте <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained tokens → Generate new</a>.</li>
           <li><b>Resource owner:</b> historyinquirylab. <b>Repository access:</b> Only select repositories → <code>historyinquirylab.github.io</code>.</li>
           <li><b>Permissions → Repository → Contents:</b> Read and write.</li>
-          <li>Generate, copy the token, paste it above, click <b>Save &amp; connect</b>.</li>
+          <li>Сгенерируйте, скопируйте токен, вставьте выше и нажмите <b>«Сохранить и подключиться»</b>.</li>
         </ol>
       </details>
     </section>
 
-    <!-- Add material -->
+    <!-- Добавить материал -->
     <section class="card">
-      <h2>➕ Add a material</h2>
-      <p class="hint">Upload a worksheet image. A lightweight preview thumbnail is generated automatically.</p>
-      <label>Title <span class="req">*</span></label>
-      <input type="text" id="title" placeholder="e.g. Ancient Roman Coins" />
-      <label>Description <span class="req">*</span></label>
-      <textarea id="desc" placeholder="One or two sentences about the worksheet."></textarea>
-      <label>Image alt text <span class="muted">(optional — describes the image for accessibility/SEO)</span></label>
-      <input type="text" id="alt" placeholder="Defaults to the title if left empty" />
-      <label>Worksheet file <span class="req">*</span></label>
+      <h2>➕ Добавить материал</h2>
+      <p class="hint">Загрузите изображение воркшита. Лёгкое превью создаётся автоматически.</p>
+      <label>Название <span class="req">*</span></label>
+      <input type="text" id="title" placeholder="например, Ancient Roman Coins" />
+      <label>Описание <span class="req">*</span></label>
+      <textarea id="desc" placeholder="Одно-два предложения о материале."></textarea>
+      <label>Alt-текст изображения <span class="muted">(необязательно — описание картинки для доступности и SEO)</span></label>
+      <input type="text" id="alt" placeholder="Если оставить пустым — возьмётся название" />
+      <label>Файл воркшита <span class="req">*</span></label>
       <label class="file-drop" id="drop">
-        <span id="dropText">Click to choose an image (PNG or JPG)</span>
+        <span id="dropText">Нажмите, чтобы выбрать изображение (PNG или JPG)</span>
         <input type="file" id="file" accept="image/*" />
       </label>
-      <div class="preview" id="prev"><img id="prevImg" alt="Selected file preview" /></div>
+      <div class="preview" id="prev"><img id="prevImg" alt="Превью выбранного файла" /></div>
       <div class="actions">
-        <button class="btn btn--gold" id="add" disabled>Publish material</button>
+        <button class="btn btn--gold" id="add" disabled>Опубликовать материал</button>
       </div>
       <div class="msg" id="addMsg"></div>
     </section>
 
-    <!-- Existing -->
+    <!-- Текущие -->
     <section class="card">
-      <h2>📄 Current materials</h2>
-      <p class="hint">These appear on the site. Deleting removes the file, its thumbnail, and the list entry.</p>
-      <ul class="list" id="list"><li><span class="muted">Connect to load…</span></li></ul>
+      <h2>📄 Текущие материалы</h2>
+      <p class="hint">Отображаются на сайте. Удаление убирает файл, превью и запись из списка.</p>
+      <ul class="list" id="list"><li><span class="muted">Подключитесь, чтобы загрузить…</span></li></ul>
       <div class="msg" id="listMsg"></div>
     </section>
 
-    <p class="muted" style="margin-top:18px">Changes are committed to GitHub and go live on the site in ~1 minute.</p>
+    <p class="muted" style="margin-top:18px">Изменения сохраняются в GitHub и появляются на сайте примерно через минуту.</p>
   </div>
 
   <script>
@@ -150,10 +150,10 @@
     var LS = { tok:'hil_gh_token', repo:'hil_gh_repo', branch:'hil_gh_branch' };
     var $ = function(id){ return document.getElementById(id); };
 
-    // ---------- state ----------
+    // ---------- состояние ----------
     var state = { token:'', owner:'', repo:'', branch:'main', selectedFile:null };
 
-    // ---------- helpers ----------
+    // ---------- вспомогательные ----------
     function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
     function b64DecodeUnicode(str){ return decodeURIComponent(escape(atob(str.replace(/\s/g,'')))); }
     function slugify(t){
@@ -178,7 +178,7 @@
         fr.readAsDataURL(file);
       });
     }
-    // Downscale an image file to a JPEG thumbnail, return base64 (no prefix).
+    // Уменьшаем картинку до JPEG-превью, возвращаем base64 (без префикса).
     function makeThumb(file, maxW){
       return new Promise(function(res,rej){
         var url = URL.createObjectURL(file);
@@ -216,7 +216,7 @@
       });
     }
 
-    // ---------- one atomic commit with multiple file changes ----------
+    // ---------- один атомарный коммит с несколькими файлами ----------
     // changes: [{ path, base64 } | { path, text } | { path, remove:true }]
     function commitChanges(message, changes){
       var ref;
@@ -224,7 +224,6 @@
         .then(function(r){ ref = r.object.sha; return gh('/repos/'+state.owner+'/'+state.repo+'/git/commits/'+ref); })
         .then(function(commit){
           var baseTree = commit.tree.sha;
-          // create blobs for content changes
           var blobJobs = changes.map(function(ch){
             if(ch.remove) return Promise.resolve(null);
             if(ch.text != null){
@@ -253,20 +252,20 @@
         });
     }
 
-    // ---------- manifest ----------
+    // ---------- манифест ----------
     function getManifest(){
       return gh('/repos/'+state.owner+'/'+state.repo+'/contents/data/materials.json?ref='+state.branch+'&t='+Date.now())
         .then(function(r){ return JSON.parse(b64DecodeUnicode(r.content)); });
     }
 
-    // ---------- UI: messages ----------
+    // ---------- сообщения ----------
     function say(el, kind, text){
       el.className = 'msg show ' + kind;
       el.textContent = text;
     }
     function clearMsg(el){ el.className = 'msg'; el.textContent=''; }
 
-    // ---------- connection ----------
+    // ---------- подключение ----------
     function parseRepo(){
       var v = $('repo').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'');
       var parts = v.split('/');
@@ -276,7 +275,7 @@
     }
     function setConnected(user){
       $('dot').classList.add('on');
-      $('who').textContent = user ? ('Connected as ' + user) : 'Connected';
+      $('who').textContent = user ? ('Подключено как ' + user) : 'Подключено';
     }
     function setDisconnected(){
       $('dot').classList.remove('on');
@@ -284,7 +283,7 @@
     }
     function connect(){
       parseRepo();
-      if(!state.token){ say($('addMsg'),'err','Enter a token first.'); return Promise.reject(); }
+      if(!state.token){ say($('addMsg'),'err','Сначала введите токен.'); return Promise.reject(); }
       return gh('/user').then(function(u){
         localStorage.setItem(LS.tok, state.token);
         localStorage.setItem(LS.repo, $('repo').value.trim());
@@ -294,16 +293,16 @@
         loadList();
       }).catch(function(e){
         setDisconnected();
-        say($('addMsg'),'err','Could not connect: ' + e.message);
+        say($('addMsg'),'err','Не удалось подключиться: ' + e.message);
         throw e;
       });
     }
 
-    // ---------- list + delete ----------
+    // ---------- список + удаление ----------
     function loadList(){
-      $('list').innerHTML = '<li><span class="muted">Loading…</span></li>';
+      $('list').innerHTML = '<li><span class="muted">Загрузка…</span></li>';
       getManifest().then(function(items){
-        if(!items.length){ $('list').innerHTML = '<li><span class="muted">No materials yet.</span></li>'; return; }
+        if(!items.length){ $('list').innerHTML = '<li><span class="muted">Пока нет материалов.</span></li>'; return; }
         $('list').innerHTML = '';
         items.forEach(function(m){
           var li = document.createElement('li');
@@ -314,35 +313,34 @@
           meta.querySelector('b').textContent = m.title;
           meta.querySelector('span').textContent = m.file;
           var del = document.createElement('button');
-          del.className='btn btn--danger btn--sm'; del.textContent='Delete';
+          del.className='btn btn--danger btn--sm'; del.textContent='Удалить';
           del.onclick = function(){ deleteMaterial(m, del); };
           li.appendChild(img); li.appendChild(meta); li.appendChild(del);
           $('list').appendChild(li);
         });
-      }).catch(function(e){ say($('listMsg'),'err','Load failed: ' + e.message); });
+      }).catch(function(e){ say($('listMsg'),'err','Ошибка загрузки: ' + e.message); });
     }
 
     function deleteMaterial(m, btn){
-      if(!confirm('Delete “' + m.title + '”? This removes the file from the site.')) return;
+      if(!confirm('Удалить «' + m.title + '»? Файл будет убран с сайта.')) return;
       btn.disabled = true;
-      say($('listMsg'),'work','Deleting “' + m.title + '”…');
+      say($('listMsg'),'work','Удаление «' + m.title + '»…');
       getManifest().then(function(items){
         var next = items.filter(function(x){ return x.id !== m.id; });
         var changes = [{ path:'data/materials.json', text: JSON.stringify(next, null, 2) + '\n' }];
-        // remove file + thumbnail (thumbnail may equal file for non-image uploads)
         changes.push({ path: m.file, remove:true });
         if(m.thumb && m.thumb !== m.file) changes.push({ path: m.thumb, remove:true });
         return commitChanges('admin: remove ' + m.id, changes);
       }).then(function(){
-        say($('listMsg'),'ok','Deleted. Site updates in ~1 minute.');
+        say($('listMsg'),'ok','Удалено. Сайт обновится примерно через минуту.');
         loadList();
       }).catch(function(e){
         btn.disabled=false;
-        say($('listMsg'),'err','Delete failed: ' + e.message);
+        say($('listMsg'),'err','Ошибка удаления: ' + e.message);
       });
     }
 
-    // ---------- add ----------
+    // ---------- добавление ----------
     function refreshAddEnabled(){
       var ok = state.selectedFile && $('title').value.trim() && $('desc').value.trim();
       $('add').disabled = !ok;
@@ -352,7 +350,7 @@
       if(!file) return;
       state.selectedFile = file;
       $('drop').classList.add('has');
-      $('dropText').textContent = file.name + ' (' + Math.round(file.size/1024) + ' KB)';
+      $('dropText').textContent = file.name + ' (' + Math.round(file.size/1024) + ' КБ)';
       var url = URL.createObjectURL(file);
       $('prevImg').src = url; $('prev').style.display='block';
       refreshAddEnabled();
@@ -360,19 +358,18 @@
 
     function publish(){
       parseRepo();
-      if(!state.token){ say($('addMsg'),'err','Connect with a token first.'); return; }
+      if(!state.token){ say($('addMsg'),'err','Сначала подключитесь с токеном.'); return; }
       var title = $('title').value.trim();
       var desc  = $('desc').value.trim();
       var alt   = $('alt').value.trim() || title;
       var file  = state.selectedFile;
-      if(!title || !desc || !file){ say($('addMsg'),'err','Title, description and a file are required.'); return; }
+      if(!title || !desc || !file){ say($('addMsg'),'err','Нужны название, описание и файл.'); return; }
 
       $('add').disabled = true;
-      say($('addMsg'),'work','Reading file & building thumbnail…');
+      say($('addMsg'),'work','Читаю файл и создаю превью…');
 
       var ext = extOf(file);
       getManifest().then(function(items){
-        // unique id
         var base = slugify(title), id = base, n = 2;
         var ids = items.map(function(x){ return x.id; });
         while(ids.indexOf(id) !== -1){ id = base + '-' + (n++); }
@@ -382,7 +379,7 @@
 
         return Promise.all([ readAsBase64(file), makeThumb(file, 900) ]).then(function(res){
           var fileB64 = res[0], thumbB64 = res[1];
-          say($('addMsg'),'work','Uploading to GitHub…');
+          say($('addMsg'),'work','Загружаю в GitHub…');
           var entry = { id:id, title:title, desc:desc, file:filePath, thumb:thumbPath, alt:alt };
           var next = items.concat([entry]);
           return commitChanges('admin: add ' + id, [
@@ -392,25 +389,24 @@
           ]);
         });
       }).then(function(){
-        say($('addMsg'),'ok','Published! It appears on the site in ~1 minute.');
-        // reset form
+        say($('addMsg'),'ok','Опубликовано! Появится на сайте примерно через минуту.');
         $('title').value=''; $('desc').value=''; $('alt').value='';
         state.selectedFile=null; $('file').value='';
-        $('drop').classList.remove('has'); $('dropText').textContent='Click to choose an image (PNG or JPG)';
+        $('drop').classList.remove('has'); $('dropText').textContent='Нажмите, чтобы выбрать изображение (PNG или JPG)';
         $('prev').style.display='none';
         refreshAddEnabled();
         loadList();
       }).catch(function(e){
         $('add').disabled=false;
-        say($('addMsg'),'err','Failed: ' + e.message);
+        say($('addMsg'),'err','Ошибка: ' + e.message);
       });
     }
 
-    // ---------- wire up ----------
+    // ---------- обработчики ----------
     $('saveTok').onclick = function(){ connect().catch(function(){}); };
     $('forgetTok').onclick = function(){
       localStorage.removeItem(LS.tok); $('token').value=''; state.token='';
-      setDisconnected(); $('list').innerHTML='<li><span class="muted">Connect to load…</span></li>';
+      setDisconnected(); $('list').innerHTML='<li><span class="muted">Подключитесь, чтобы загрузить…</span></li>';
     };
     $('drop').addEventListener('dragover', function(e){ e.preventDefault(); });
     $('drop').addEventListener('drop', function(e){ e.preventDefault(); onFile(e.dataTransfer.files[0]); });
@@ -418,7 +414,7 @@
     ['title','desc'].forEach(function(id){ $(id).addEventListener('input', refreshAddEnabled); });
     $('add').onclick = publish;
 
-    // ---------- restore saved settings ----------
+    // ---------- восстановление настроек ----------
     (function restore(){
       var t = localStorage.getItem(LS.tok);
       var r = localStorage.getItem(LS.repo);
