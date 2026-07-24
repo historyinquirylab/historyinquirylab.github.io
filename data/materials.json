@@ -1,0 +1,34 @@
+[
+  {
+    "id": "one-place-four-ages",
+    "title": "One Place, Four Ages",
+    "desc": "How can a single place tell thousands of years of history? Students compare evidence across four eras and build a claim.",
+    "file": "downloads/one-place-four-ages.png",
+    "thumb": "assets/thumbs/one-place-four-ages.jpg",
+    "alt": "Preview of the One Place, Four Ages worksheet showing a hill through the Stone Age, Bronze Age, Roman period and Middle Ages"
+  },
+  {
+    "id": "greek-hoplite-helmet",
+    "title": "Greek Hoplite Helmet",
+    "desc": "Investigate a single artifact as historical evidence—where it was found, what it's made of, and what it reveals about the past.",
+    "file": "downloads/greek-hoplite-helmet.png",
+    "thumb": "assets/thumbs/greek-hoplite-helmet.jpg",
+    "alt": "Preview of the Greek Hoplite Helmet worksheet for investigating an artifact as historical evidence"
+  },
+  {
+    "id": "ancient-greek-amphora-color",
+    "title": "Ancient Greek Amphora",
+    "desc": "One object, five experts. Students step into the roles of archaeologist, historian, chemist, conservator and curator.",
+    "file": "downloads/ancient-greek-amphora-color.png",
+    "thumb": "assets/thumbs/ancient-greek-amphora-color.jpg",
+    "alt": "Preview of the Ancient Greek Amphora worksheet with five questions from different experts"
+  },
+  {
+    "id": "find-the-evidence-color",
+    "title": "Find the Evidence That Doesn't Belong",
+    "desc": "Why do archaeologists think this was a farming village? Students spot the out-of-place clues and reconstruct the real story.",
+    "file": "downloads/find-the-evidence-color.png",
+    "thumb": "assets/thumbs/find-the-evidence-color.jpg",
+    "alt": "Preview of the Find the Evidence That Doesn't Belong worksheet about a Neolithic farming village"
+  }
+]

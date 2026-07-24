@@ -246,6 +246,12 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 28px;
     }
+    .grid__loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--ink-soft);
+      padding: 30px 0;
+    }
     .card {
       background: var(--cream);
       border: 1px solid rgba(23,50,78,.08);
@@ -483,76 +489,9 @@
           <p>Ready-to-print activities that turn students into investigators. Click download to save a full-size worksheet for your classroom.</p>
         </div>
 
-        <div class="grid">
-
-          <!-- Card 1 -->
-          <article class="card reveal">
-            <div class="card__thumb">
-              <img src="./assets/thumbs/one-place-four-ages.jpg" alt="Preview of the One Place, Four Ages worksheet showing a hill through the Stone Age, Bronze Age, Roman period and Middle Ages" loading="lazy" />
-            </div>
-            <div class="card__body">
-              <h3>One Place, Four Ages</h3>
-              <p>How can a single place tell thousands of years of history? Students compare evidence across four eras and build a claim.</p>
-              <div class="card__actions">
-                <a class="btn btn--navy" href="./downloads/one-place-four-ages.png" download="one-place-four-ages.png">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="card reveal">
-            <div class="card__thumb">
-              <img src="./assets/thumbs/greek-hoplite-helmet.jpg" alt="Preview of the Greek Hoplite Helmet worksheet for investigating an artifact as historical evidence" loading="lazy" />
-            </div>
-            <div class="card__body">
-              <h3>Greek Hoplite Helmet</h3>
-              <p>Investigate a single artifact as historical evidence—where it was found, what it's made of, and what it reveals about the past.</p>
-              <div class="card__actions">
-                <a class="btn btn--navy" href="./downloads/greek-hoplite-helmet.png" download="greek-hoplite-helmet.png">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="card reveal">
-            <div class="card__thumb">
-              <img src="./assets/thumbs/ancient-greek-amphora-color.jpg" alt="Preview of the Ancient Greek Amphora worksheet with five questions from different experts" loading="lazy" />
-            </div>
-            <div class="card__body">
-              <h3>Ancient Greek Amphora</h3>
-              <p>One object, five experts. Students step into the roles of archaeologist, historian, chemist, conservator and curator.</p>
-              <div class="card__actions">
-                <a class="btn btn--navy" href="./downloads/ancient-greek-amphora-color.png" download="ancient-greek-amphora-color.png">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 4 -->
-          <article class="card reveal">
-            <div class="card__thumb">
-              <img src="./assets/thumbs/find-the-evidence-color.jpg" alt="Preview of the Find the Evidence That Doesn't Belong worksheet about a Neolithic farming village" loading="lazy" />
-            </div>
-            <div class="card__body">
-              <h3>Find the Evidence That Doesn't Belong</h3>
-              <p>Why do archaeologists think this was a farming village? Students spot the out-of-place clues and reconstruct the real story.</p>
-              <div class="card__actions">
-                <a class="btn btn--navy" href="./downloads/find-the-evidence-color.png" download="find-the-evidence-color.png">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
-                  Download
-                </a>
-              </div>
-            </div>
-          </article>
-
+        <!-- Cards are rendered from ./data/materials.json (edited via /admin) -->
+        <div class="grid" id="grid">
+          <p class="grid__loading">Loading resources…</p>
         </div>
       </div>
     </section>
@@ -590,15 +529,64 @@
 
   <script>
     (function () {
-      var section   = document.getElementById('resources');
-      var revealEls = Array.prototype.slice.call(section.querySelectorAll('.reveal'));
+      var section = document.getElementById('resources');
+      var grid    = document.getElementById('grid');
+
+      var DL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>';
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      // Build the resource cards from the manifest.
+      function renderCards(items) {
+        if (!items || !items.length) {
+          grid.innerHTML = '<p class="grid__loading">No resources yet — check back soon.</p>';
+          return;
+        }
+        grid.innerHTML = items.map(function (m) {
+          var file  = './' + m.file;
+          var thumb = './' + (m.thumb || m.file);
+          var name  = m.file.split('/').pop();
+          return '' +
+            '<article class="card reveal">' +
+              '<div class="card__thumb">' +
+                '<img src="' + esc(thumb) + '" alt="' + esc(m.alt || m.title) + '" loading="lazy" />' +
+              '</div>' +
+              '<div class="card__body">' +
+                '<h3>' + esc(m.title) + '</h3>' +
+                '<p>' + esc(m.desc) + '</p>' +
+                '<div class="card__actions">' +
+                  '<a class="btn btn--navy" href="' + esc(file) + '" download="' + esc(name) + '">' +
+                    DL_ICON + 'Download' +
+                  '</a>' +
+                '</div>' +
+              '</div>' +
+            '</article>';
+        }).join('');
+      }
 
       // Reveal the section head + each card with a staggered pop-in.
+      // Queried fresh so dynamically-rendered cards are included.
       function reveal() {
-        revealEls.forEach(function (el, i) {
+        Array.prototype.slice.call(section.querySelectorAll('.reveal')).forEach(function (el, i) {
           setTimeout(function () { el.classList.add('reveal-in'); }, i * 130);
         });
       }
+
+      // Load the materials list (falls back gracefully if opened via file://).
+      fetch('./data/materials.json', { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (items) {
+          renderCards(items);
+          // If the user already opened the section before cards loaded, reveal them now.
+          if (section.classList.contains('is-open')) reveal();
+        })
+        .catch(function () {
+          grid.innerHTML = '<p class="grid__loading">Couldn’t load resources. Please try again later.</p>';
+        });
 
       // The resources section only appears after the hero button is clicked.
       var trigger = document.querySelector('a.btn--gold[href="#resources"]');

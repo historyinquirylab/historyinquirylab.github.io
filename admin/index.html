@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · History Inquiry Lab</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --navy:#17324e; --navy-deep:#0f2438; --gold:#e6b84d; --gold-dark:#c9a13a;
+      --cream:#f6f1e6; --page:#eef1f4; --ink:#22303c; --ink-soft:#4a5a67;
+      --ok:#2e7d52; --err:#b3402f; --line:rgba(23,50,78,.14);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--page);line-height:1.55;padding:24px 16px 80px}
+    .wrap{max-width:760px;margin:0 auto}
+    header.top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+    header.top img{width:46px;height:46px;border-radius:50%;background:#fff;padding:5px;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+    header.top h1{font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;color:var(--navy);font-weight:700;line-height:1.1}
+    header.top p{font-size:.85rem;color:var(--ink-soft)}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px;box-shadow:0 4px 16px rgba(23,50,78,.05)}
+    .card h2{font-size:1.05rem;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .card > .hint{font-size:.85rem;color:var(--ink-soft);margin-bottom:16px}
+    label{display:block;font-weight:600;font-size:.9rem;margin:14px 0 6px}
+    label .req{color:var(--err)}
+    input[type=text],input[type=password],textarea{width:100%;font:inherit;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:#fcfcfb;color:var(--ink)}
+    input:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(230,184,77,.25)}
+    textarea{resize:vertical;min-height:70px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row > div{flex:1;min-width:170px}
+    .file-drop{border:2px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--ink-soft);font-size:.9rem;cursor:pointer;background:#fcfcfb;transition:border-color .15s,background .15s}
+    .file-drop:hover{border-color:var(--gold);background:#fffdf6}
+    .file-drop.has{border-color:var(--ok);color:var(--ink)}
+    .file-drop input{display:none}
+    .preview{margin-top:12px;display:none}
+    .preview img{max-width:100%;max-height:220px;border-radius:8px;border:1px solid var(--line);display:block}
+    .btn{appearance:none;border:none;cursor:pointer;font:inherit;font-weight:600;border-radius:999px;padding:12px 24px;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s,background .15s;color:#fff;background:var(--navy)}
+    .btn:hover:not(:disabled){transform:translateY(-1px);background:var(--navy-deep)}
+    .btn--gold{background:var(--gold);color:var(--navy-deep)}
+    .btn--gold:hover:not(:disabled){background:#f0c765}
+    .btn:disabled{opacity:.55;cursor:not-allowed}
+    .btn--sm{padding:7px 14px;font-size:.85rem}
+    .btn--danger{background:#fff;color:var(--err);border:1px solid rgba(179,64,47,.4)}
+    .btn--danger:hover:not(:disabled){background:#fbeeec;transform:none}
+    .actions{margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .msg{margin-top:14px;padding:11px 14px;border-radius:9px;font-size:.9rem;display:none}
+    .msg.show{display:block}
+    .msg.ok{background:#e7f4ec;color:var(--ok);border:1px solid #bfe1cc}
+    .msg.err{background:#fbeae6;color:var(--err);border:1px solid #eec4bb}
+    .msg.work{background:#eef3f8;color:var(--navy);border:1px solid #cddcea}
+    .list{list-style:none;margin-top:6px}
+    .list li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+    .list li:first-child{border-top:none}
+    .list img{width:64px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:0 0 auto;background:#eee}
+    .list .meta{flex:1;min-width:0}
+    .list .meta b{display:block;font-size:.92rem;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .list .meta span{font-size:.8rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+    .status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#c33}
+    .status-dot.on{background:var(--ok)}
+    details.help{margin-top:20px;font-size:.86rem;color:var(--ink-soft)}
+    details.help summary{cursor:pointer;font-weight:600;color:var(--navy)}
+    details.help ol{margin:10px 0 0 18px}
+    details.help a{color:var(--gold-dark)}
+    code{background:#eceff2;padding:1px 5px;border-radius:4px;font-size:.85em}
+    .muted{font-size:.8rem;color:var(--ink-soft)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img src="../assets/logo.png" alt="History Inquiry Lab logo" />
+      <div>
+        <h1>Resources Admin</h1>
+        <p>Add and remove free materials — <a href="../" style="color:var(--gold-dark)">view site</a></p>
+      </div>
+    </header>
+
+    <!-- Connection -->
+    <section class="card">
+      <h2><span class="status-dot" id="dot"></span> Connection</h2>
+      <p class="hint">Enter a GitHub token with write access to this repository. It is stored only in this browser.</p>
+      <div class="row">
+        <div>
+          <label>Repository</label>
+          <input type="text" id="repo" value="historyinquirylab/historyinquirylab.github.io" />
+        </div>
+        <div>
+          <label>Branch</label>
+          <input type="text" id="branch" value="main" />
+        </div>
+      </div>
+      <label>GitHub token <span class="req">*</span></label>
+      <input type="password" id="token" placeholder="github_pat_… or ghp_…" autocomplete="off" />
+      <div class="actions">
+        <button class="btn" id="saveTok">Save &amp; connect</button>
+        <button class="btn--danger btn btn--sm" id="forgetTok" type="button">Forget token</button>
+        <span class="muted" id="who"></span>
+      </div>
+      <details class="help">
+        <summary>How to get a token</summary>
+        <ol>
+          <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Fine-grained tokens → Generate new</a>.</li>
+          <li><b>Resource owner:</b> historyinquirylab. <b>Repository access:</b> Only select repositories → <code>historyinquirylab.github.io</code>.</li>
+          <li><b>Permissions → Repository → Contents:</b> Read and write.</li>
+          <li>Generate, copy the token, paste it above, click <b>Save &amp; connect</b>.</li>
+        </ol>
+      </details>
+    </section>
+
+    <!-- Add material -->
+    <section class="card">
+      <h2>➕ Add a material</h2>
+      <p class="hint">Upload a worksheet image. A lightweight preview thumbnail is generated automatically.</p>
+      <label>Title <span class="req">*</span></label>
+      <input type="text" id="title" placeholder="e.g. Ancient Roman Coins" />
+      <label>Description <span class="req">*</span></label>
+      <textarea id="desc" placeholder="One or two sentences about the worksheet."></textarea>
+      <label>Image alt text <span class="muted">(optional — describes the image for accessibility/SEO)</span></label>
+      <input type="text" id="alt" placeholder="Defaults to the title if left empty" />
+      <label>Worksheet file <span class="req">*</span></label>
+      <label class="file-drop" id="drop">
+        <span id="dropText">Click to choose an image (PNG or JPG)</span>
+        <input type="file" id="file" accept="image/*" />
+      </label>
+      <div class="preview" id="prev"><img id="prevImg" alt="Selected file preview" /></div>
+      <div class="actions">
+        <button class="btn btn--gold" id="add" disabled>Publish material</button>
+      </div>
+      <div class="msg" id="addMsg"></div>
+    </section>
+
+    <!-- Existing -->
+    <section class="card">
+      <h2>📄 Current materials</h2>
+      <p class="hint">These appear on the site. Deleting removes the file, its thumbnail, and the list entry.</p>
+      <ul class="list" id="list"><li><span class="muted">Connect to load…</span></li></ul>
+      <div class="msg" id="listMsg"></div>
+    </section>
+
+    <p class="muted" style="margin-top:18px">Changes are committed to GitHub and go live on the site in ~1 minute.</p>
+  </div>
+
+  <script>
+  (function(){
+    var API = 'https://api.github.com';
+    var LS = { tok:'hil_gh_token', repo:'hil_gh_repo', branch:'hil_gh_branch' };
+    var $ = function(id){ return document.getElementById(id); };
+
+    // ---------- state ----------
+    var state = { token:'', owner:'', repo:'', branch:'main', selectedFile:null };
+
+    // ---------- helpers ----------
+    function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
+    function b64DecodeUnicode(str){ return decodeURIComponent(escape(atob(str.replace(/\s/g,'')))); }
+    function slugify(t){
+      return (t||'').toLowerCase().trim()
+        .replace(/['’`]/g,'')
+        .replace(/[^a-z0-9]+/g,'-')
+        .replace(/^-+|-+$/g,'').slice(0,60) || 'material';
+    }
+    function extOf(file){
+      var m = (file.name||'').match(/\.([a-z0-9]+)$/i);
+      if(m) return m[1].toLowerCase();
+      if(/png/.test(file.type)) return 'png';
+      if(/jpe?g/.test(file.type)) return 'jpg';
+      if(/webp/.test(file.type)) return 'webp';
+      return 'png';
+    }
+    function readAsBase64(file){
+      return new Promise(function(res,rej){
+        var fr = new FileReader();
+        fr.onload = function(){ res(String(fr.result).split(',')[1]); };
+        fr.onerror = rej;
+        fr.readAsDataURL(file);
+      });
+    }
+    // Downscale an image file to a JPEG thumbnail, return base64 (no prefix).
+    function makeThumb(file, maxW){
+      return new Promise(function(res,rej){
+        var url = URL.createObjectURL(file);
+        var img = new Image();
+        img.onload = function(){
+          var scale = Math.min(1, maxW / img.naturalWidth);
+          var w = Math.round(img.naturalWidth * scale);
+          var h = Math.round(img.naturalHeight * scale);
+          var c = document.createElement('canvas'); c.width=w; c.height=h;
+          var ctx = c.getContext('2d');
+          ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,w,h);
+          ctx.drawImage(img,0,0,w,h);
+          URL.revokeObjectURL(url);
+          res(c.toDataURL('image/jpeg', 0.78).split(',')[1]);
+        };
+        img.onerror = function(e){ URL.revokeObjectURL(url); rej(e); };
+        img.src = url;
+      });
+    }
+    function gh(path, opts){
+      opts = opts || {};
+      return fetch(API + path, {
+        method: opts.method || 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + state.token,
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28'
+        },
+        body: opts.body ? JSON.stringify(opts.body) : undefined
+      }).then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(j){
+          if(!r.ok){ throw new Error((j && j.message) || ('HTTP ' + r.status)); }
+          return j;
+        });
+      });
+    }
+
+    // ---------- one atomic commit with multiple file changes ----------
+    // changes: [{ path, base64 } | { path, text } | { path, remove:true }]
+    function commitChanges(message, changes){
+      var ref;
+      return gh('/repos/'+state.owner+'/'+state.repo+'/git/ref/heads/'+state.branch)
+        .then(function(r){ ref = r.object.sha; return gh('/repos/'+state.owner+'/'+state.repo+'/git/commits/'+ref); })
+        .then(function(commit){
+          var baseTree = commit.tree.sha;
+          // create blobs for content changes
+          var blobJobs = changes.map(function(ch){
+            if(ch.remove) return Promise.resolve(null);
+            if(ch.text != null){
+              return gh('/repos/'+state.owner+'/'+state.repo+'/git/blobs',
+                { method:'POST', body:{ content: ch.text, encoding:'utf-8' } }).then(function(b){ return b.sha; });
+            }
+            return gh('/repos/'+state.owner+'/'+state.repo+'/git/blobs',
+              { method:'POST', body:{ content: ch.base64, encoding:'base64' } }).then(function(b){ return b.sha; });
+          });
+          return Promise.all(blobJobs).then(function(shas){
+            var tree = changes.map(function(ch,i){
+              if(ch.remove) return { path:ch.path, mode:'100644', type:'blob', sha:null };
+              return { path:ch.path, mode:'100644', type:'blob', sha:shas[i] };
+            });
+            return gh('/repos/'+state.owner+'/'+state.repo+'/git/trees',
+              { method:'POST', body:{ base_tree: baseTree, tree: tree } });
+          });
+        })
+        .then(function(tree){
+          return gh('/repos/'+state.owner+'/'+state.repo+'/git/commits',
+            { method:'POST', body:{ message: message, tree: tree.sha, parents:[ref] } });
+        })
+        .then(function(newCommit){
+          return gh('/repos/'+state.owner+'/'+state.repo+'/git/refs/heads/'+state.branch,
+            { method:'PATCH', body:{ sha: newCommit.sha } });
+        });
+    }
+
+    // ---------- manifest ----------
+    function getManifest(){
+      return gh('/repos/'+state.owner+'/'+state.repo+'/contents/data/materials.json?ref='+state.branch+'&t='+Date.now())
+        .then(function(r){ return JSON.parse(b64DecodeUnicode(r.content)); });
+    }
+
+    // ---------- UI: messages ----------
+    function say(el, kind, text){
+      el.className = 'msg show ' + kind;
+      el.textContent = text;
+    }
+    function clearMsg(el){ el.className = 'msg'; el.textContent=''; }
+
+    // ---------- connection ----------
+    function parseRepo(){
+      var v = $('repo').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'');
+      var parts = v.split('/');
+      state.owner = parts[0]||''; state.repo = parts[1]||'';
+      state.branch = $('branch').value.trim() || 'main';
+      state.token = $('token').value.trim();
+    }
+    function setConnected(user){
+      $('dot').classList.add('on');
+      $('who').textContent = user ? ('Connected as ' + user) : 'Connected';
+    }
+    function setDisconnected(){
+      $('dot').classList.remove('on');
+      $('who').textContent = '';
+    }
+    function connect(){
+      parseRepo();
+      if(!state.token){ say($('addMsg'),'err','Enter a token first.'); return Promise.reject(); }
+      return gh('/user').then(function(u){
+        localStorage.setItem(LS.tok, state.token);
+        localStorage.setItem(LS.repo, $('repo').value.trim());
+        localStorage.setItem(LS.branch, state.branch);
+        setConnected(u.login);
+        clearMsg($('addMsg'));
+        loadList();
+      }).catch(function(e){
+        setDisconnected();
+        say($('addMsg'),'err','Could not connect: ' + e.message);
+        throw e;
+      });
+    }
+
+    // ---------- list + delete ----------
+    function loadList(){
+      $('list').innerHTML = '<li><span class="muted">Loading…</span></li>';
+      getManifest().then(function(items){
+        if(!items.length){ $('list').innerHTML = '<li><span class="muted">No materials yet.</span></li>'; return; }
+        $('list').innerHTML = '';
+        items.forEach(function(m){
+          var li = document.createElement('li');
+          var img = document.createElement('img');
+          img.src = '../' + (m.thumb || m.file); img.alt = '';
+          var meta = document.createElement('div'); meta.className='meta';
+          meta.innerHTML = '<b></b><span></span>';
+          meta.querySelector('b').textContent = m.title;
+          meta.querySelector('span').textContent = m.file;
+          var del = document.createElement('button');
+          del.className='btn btn--danger btn--sm'; del.textContent='Delete';
+          del.onclick = function(){ deleteMaterial(m, del); };
+          li.appendChild(img); li.appendChild(meta); li.appendChild(del);
+          $('list').appendChild(li);
+        });
+      }).catch(function(e){ say($('listMsg'),'err','Load failed: ' + e.message); });
+    }
+
+    function deleteMaterial(m, btn){
+      if(!confirm('Delete “' + m.title + '”? This removes the file from the site.')) return;
+      btn.disabled = true;
+      say($('listMsg'),'work','Deleting “' + m.title + '”…');
+      getManifest().then(function(items){
+        var next = items.filter(function(x){ return x.id !== m.id; });
+        var changes = [{ path:'data/materials.json', text: JSON.stringify(next, null, 2) + '\n' }];
+        // remove file + thumbnail (thumbnail may equal file for non-image uploads)
+        changes.push({ path: m.file, remove:true });
+        if(m.thumb && m.thumb !== m.file) changes.push({ path: m.thumb, remove:true });
+        return commitChanges('admin: remove ' + m.id, changes);
+      }).then(function(){
+        say($('listMsg'),'ok','Deleted. Site updates in ~1 minute.');
+        loadList();
+      }).catch(function(e){
+        btn.disabled=false;
+        say($('listMsg'),'err','Delete failed: ' + e.message);
+      });
+    }
+
+    // ---------- add ----------
+    function refreshAddEnabled(){
+      var ok = state.selectedFile && $('title').value.trim() && $('desc').value.trim();
+      $('add').disabled = !ok;
+    }
+
+    function onFile(file){
+      if(!file) return;
+      state.selectedFile = file;
+      $('drop').classList.add('has');
+      $('dropText').textContent = file.name + ' (' + Math.round(file.size/1024) + ' KB)';
+      var url = URL.createObjectURL(file);
+      $('prevImg').src = url; $('prev').style.display='block';
+      refreshAddEnabled();
+    }
+
+    function publish(){
+      parseRepo();
+      if(!state.token){ say($('addMsg'),'err','Connect with a token first.'); return; }
+      var title = $('title').value.trim();
+      var desc  = $('desc').value.trim();
+      var alt   = $('alt').value.trim() || title;
+      var file  = state.selectedFile;
+      if(!title || !desc || !file){ say($('addMsg'),'err','Title, description and a file are required.'); return; }
+
+      $('add').disabled = true;
+      say($('addMsg'),'work','Reading file & building thumbnail…');
+
+      var ext = extOf(file);
+      getManifest().then(function(items){
+        // unique id
+        var base = slugify(title), id = base, n = 2;
+        var ids = items.map(function(x){ return x.id; });
+        while(ids.indexOf(id) !== -1){ id = base + '-' + (n++); }
+
+        var filePath  = 'downloads/' + id + '.' + ext;
+        var thumbPath = 'assets/thumbs/' + id + '.jpg';
+
+        return Promise.all([ readAsBase64(file), makeThumb(file, 900) ]).then(function(res){
+          var fileB64 = res[0], thumbB64 = res[1];
+          say($('addMsg'),'work','Uploading to GitHub…');
+          var entry = { id:id, title:title, desc:desc, file:filePath, thumb:thumbPath, alt:alt };
+          var next = items.concat([entry]);
+          return commitChanges('admin: add ' + id, [
+            { path: filePath,  base64: fileB64 },
+            { path: thumbPath, base64: thumbB64 },
+            { path: 'data/materials.json', text: JSON.stringify(next, null, 2) + '\n' }
+          ]);
+        });
+      }).then(function(){
+        say($('addMsg'),'ok','Published! It appears on the site in ~1 minute.');
+        // reset form
+        $('title').value=''; $('desc').value=''; $('alt').value='';
+        state.selectedFile=null; $('file').value='';
+        $('drop').classList.remove('has'); $('dropText').textContent='Click to choose an image (PNG or JPG)';
+        $('prev').style.display='none';
+        refreshAddEnabled();
+        loadList();
+      }).catch(function(e){
+        $('add').disabled=false;
+        say($('addMsg'),'err','Failed: ' + e.message);
+      });
+    }
+
+    // ---------- wire up ----------
+    $('saveTok').onclick = function(){ connect().catch(function(){}); };
+    $('forgetTok').onclick = function(){
+      localStorage.removeItem(LS.tok); $('token').value=''; state.token='';
+      setDisconnected(); $('list').innerHTML='<li><span class="muted">Connect to load…</span></li>';
+    };
+    $('drop').addEventListener('dragover', function(e){ e.preventDefault(); });
+    $('drop').addEventListener('drop', function(e){ e.preventDefault(); onFile(e.dataTransfer.files[0]); });
+    $('file').addEventListener('change', function(e){ onFile(e.target.files[0]); });
+    ['title','desc'].forEach(function(id){ $(id).addEventListener('input', refreshAddEnabled); });
+    $('add').onclick = publish;
+
+    // ---------- restore saved settings ----------
+    (function restore(){
+      var t = localStorage.getItem(LS.tok);
+      var r = localStorage.getItem(LS.repo);
+      var b = localStorage.getItem(LS.branch);
+      if(r) $('repo').value = r;
+      if(b) $('branch').value = b;
+      if(t){ $('token').value = t; connect().catch(function(){}); }
+    })();
+  })();
+  </script>
+</body>
+</html>
